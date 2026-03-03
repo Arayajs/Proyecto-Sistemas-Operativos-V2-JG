@@ -12,7 +12,8 @@ namespace Proyecto_Sistemas_Operativos.Logica
 {
     internal class Cla_Utilidad
     {
-        private const string RUTA_ARCHIVO_SALARIOS = @"C:\Users\josue\Downloads\SALARIOS.TXT";//Se debe asignar la ruta con respecto donde se encuentre localizado el documento
+
+        private const string RUTA_ARCHIVO_SALARIOS = @"C:\padron\SALARIOS.TXT";
 
         private static Cla_Empleados[] empleados = new Cla_Empleados[40];
         private static int contador_empleados = 0;

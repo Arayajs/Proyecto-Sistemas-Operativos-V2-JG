@@ -63,7 +63,25 @@ namespace Proyecto_Sistemas_Operativos.Presentacion
 
         private void btn_cargar_default_Click(object sender, EventArgs e)
         {
-            CargarDatos(@"C:\Users\josue\Downloads\SALARIOS.TXT");
+            bool cargado = Cla_Utilidad.CargarArchivoSalarios();
+            if (!cargado)
+            {
+                MessageBox.Show("No se pudo cargar el archivo de salarios por defecto.\n\nVerifique que el archivo exista en la ruta configurada y tenga el formato correcto.",
+                    "Error al cargar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int total = Cla_Utilidad.ObtenerContadorEmpleados();
+            lbl_estado.Text = $"\u2714 Archivo cargado \u2014 {total} empleados encontrados";
+            lbl_estado.ForeColor = Color.FromArgb(39, 174, 96);
+
+            dgv_principal.DataSource = Cla_Utilidad.CrearDataGridPrincipal();
+            dgv_mayor_salario.DataSource = Cla_Utilidad.ObtenerMayorSalario();
+            dgv_menor_salario.DataSource = Cla_Utilidad.ObtenerMenorSalario();
+
+            btn_procesar_hilos.Enabled = true;
+            lbl_hilos_estado.Text = "Listo para procesar con hilos";
+            lbl_hilos_estado.ForeColor = Color.FromArgb(52, 73, 94);
         }
 
         private void CargarDatos(string ruta)
@@ -122,11 +140,11 @@ namespace Proyecto_Sistemas_Operativos.Presentacion
                 progressBar1.Visible = false;
                 progressBar1.Style = ProgressBarStyle.Blocks;
 
-                if (Cla_Utilidad.dt_hombres != null)      dgv_hombres.DataSource      = Cla_Utilidad.dt_hombres;
-                if (Cla_Utilidad.dt_mujeres != null)       dgv_mujeres.DataSource      = Cla_Utilidad.dt_mujeres;
-                if (Cla_Utilidad.dt_menor_1m != null)      dgv_menor_1m.DataSource     = Cla_Utilidad.dt_menor_1m;
-                if (Cla_Utilidad.dt_entre_1m_3m != null)   dgv_entre_1m_3m.DataSource  = Cla_Utilidad.dt_entre_1m_3m;
-                if (Cla_Utilidad.dt_mayor_3m != null)      dgv_mayor_3m.DataSource     = Cla_Utilidad.dt_mayor_3m;
+                if (Cla_Utilidad.dt_hombres != null) dgv_hombres.DataSource = Cla_Utilidad.dt_hombres;
+                if (Cla_Utilidad.dt_mujeres != null) dgv_mujeres.DataSource = Cla_Utilidad.dt_mujeres;
+                if (Cla_Utilidad.dt_menor_1m != null) dgv_menor_1m.DataSource = Cla_Utilidad.dt_menor_1m;
+                if (Cla_Utilidad.dt_entre_1m_3m != null) dgv_entre_1m_3m.DataSource = Cla_Utilidad.dt_entre_1m_3m;
+                if (Cla_Utilidad.dt_mayor_3m != null) dgv_mayor_3m.DataSource = Cla_Utilidad.dt_mayor_3m;
 
                 lbl_hilos_estado.Text = "\u2714 Todos los hilos finalizaron correctamente";
                 lbl_hilos_estado.ForeColor = Color.FromArgb(39, 174, 96);
